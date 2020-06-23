@@ -59,10 +59,13 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
+            - run:
+                name: "test env variable"
+                command: echo $GLIP_WEBHOOK_ID
             - notify_glip_on_success:
-              GLIP_WEBHOOK_ID: $glip-channel-id
+              GLIP_WEBHOOK_ID: $GLIP_WEBHOOK_ID
             - notify_glip_on_fail:
-              GLIP_WEBHOOK_ID: $glip-channel-id
+              GLIP_WEBHOOK_ID: $GLIP_WEBHOOK_ID
 
 workflows:
     build-and-test:
