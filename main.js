@@ -1,7 +1,7 @@
 const nm = require('newman');
 
 nm.run({
-    collection: require('./meepshop-product-api-automation.postman_collection.json'),
+    collection: require('./default.postman_collection.json'),
     reporters: 'cli'
 })
     .on('start', (err, args) => {
