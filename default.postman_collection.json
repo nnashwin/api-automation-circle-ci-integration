@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "ad64ea87-7592-4c45-ae7a-83642eff65b1",
+		"name": "meepshop-product-api-automation",
+		"description": "Automation of meepshop api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test-assertion-pass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02bfce12-1246-429c-bc61-437f87f8bbdc",
+						"exec": [
+							"pm.test('Status test', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "google.com",
+					"host": [
+						"google",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test-assertion-fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71c577c9-fd17-459e-b5c8-59a18bbf5c29",
+						"exec": [
+							"pm.test('Status test', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "google.com",
+					"host": [
+						"google",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
