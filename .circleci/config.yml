@@ -46,14 +46,14 @@ commands:
               --header 'content-type: application/json' \
               --data-raw "{
                     \"payload\": {
-                        \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
+                        \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/vhb5nn56blzso6tfkkwo/PHID-FILE-zpg77b6ljrredrsglarm/%E5%9C%96%E7%89%87.png\",
                         \"title\": \"release succeeded\",
-                        \"build_num\": 1,
-                        \"build_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
-                        \"vcs_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
-                        \"branch\": \"master\",
-                        \"reponame\": \"api-automation-circle-ci-integration\",
-                        \"username\": \"tlboright\",
+                        \"build_num\": ${CIRCLE_BUILD_NUM},
+                        \"build_url\": \"${CIRCLE_BUILD_URL}\",
+                        \"vcs_url\": \"${CIRCLE_REPOSITORY_URL}\",
+                        \"branch\": \"${CIRCLE_BRANCH}\",
+                        \"reponame\": \"${CIRCLE_PROJECT_REPONAME}\",
+                        \"username\": \"${CIRCLE_USERNAME}\",
                         \"status\": \"success\"
                     }
                 }"
@@ -79,12 +79,12 @@ commands:
                     \"payload\": {
                         \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
                         \"title\": \"release failed\",
-                        \"build_num\": 1,
-                        \"build_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
-                        \"vcs_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
-                        \"branch\": \"master\",
-                        \"reponame\": \"api-automation-circle-ci-integration\",
-                        \"username\": \"tlboright\",
+                        \"build_num\": ${CIRCLE_BUILD_NUM},
+                        \"build_url\": \"${CIRCLE_BUILD_URL}\",
+                        \"vcs_url\": \"${CIRCLE_REPOSITORY_URL}\",
+                        \"branch\": \"${CIRCLE_BRANCH}\",
+                        \"reponame\": \"${CIRCLE_PROJECT_REPONAME}\",
+                        \"username\": \"${CIRCLE_USERNAME}\",
                         \"status\": \"failed\"
                     }
                 }"
