@@ -17,6 +17,50 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test
-notify:
-    webhooks:
-        - url: ${glip-channel-url}
+
+notify_glip_on_success:
+    description: "A curl command to send message to glip that the release succeeded"
+    parameters:
+      GLIP_WEBHOOK_ID:
+        type: string
+        default: "${glip-channel-id}"
+      TITLE:
+        type: string
+        default: "API Automation tests passed"
+    steps:
+      - run:
+          name: Notify glip success
+          command: |
+            curl --request POST \
+              --url https://hooks.glip.com/webhook/<< parameters.GLIP_WEBHOOK_ID >> \
+              --header 'content-type: application/json' \
+              --data "{
+              \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/vhb5nn56blzso6tfkkwo/PHID-FILE-zpg77b6ljrredrsglarm/%E5%9C%96%E7%89%87.png\",
+              \"activity\": \"Release Success\",
+              \"title\": \"<< parameters.TITLE >>\"
+            }"
+          # this step will run only if all of the previous steps have been successful
+          when: on_success
+notify_glip_on_fail:
+    description: "A curl command to send message to glip that the release failed"
+    parameters:
+      GLIP_WEBHOOK_ID:
+        type: string
+        default: ${glip-channel-id}
+      TITLE:
+        type: string
+        default: "API Automation tests have failed"
+    steps:
+      - run:
+          name: Notify glip failure 
+          command: |
+            curl --request POST \
+              --url https://hooks.glip.com/webhook/<< parameters.GLIP_WEBHOOK_ID >> \
+              --header 'content-type: application/json' \
+             --data "{
+              \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
+              \"activity\": \"🚨 Release Failed 🚨\",
+              \"title\": \"<< parameters.TITLE >>\"
+            }"
+          # this step will run only if all of the previous steps have been successful
+          when: on_fail
