@@ -17,6 +17,6 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test
-      notify:
-        webhooks:
-          - url: ${glip-channel-url}
+notify:
+    webhooks:
+        - url: ${glip-channel-url}
