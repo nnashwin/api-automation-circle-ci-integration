@@ -58,15 +58,13 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
-            - run:
-                name: "What is the conversation id?"
-                command: echo ${glip-channel-id}
             - notify_glip_on_success:
-              GLIP_WEBHOOK_ID: ${glip-channel-id}
+              GLIP_WEBHOOK_ID: $glip-channel-id
             - notify_glip_on_fail:
-              GLIP_WEBHOOK_ID: ${glip-channel-id}
+              GLIP_WEBHOOK_ID: $glip-channel-id
 
 workflows:
     build-and-test:
       jobs:
         - build-and-test
+          context: private-keys
