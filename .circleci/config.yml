@@ -11,10 +11,10 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
+    notify:
+       webhooks:
+         - url: ${glip-channel-url}
 workflows:
     build-and-test:
       jobs:
         - build-and-test
-notify:
-   webhooks:
-     - url: ${glip-channel-url}
