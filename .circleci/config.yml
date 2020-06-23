@@ -1,5 +1,32 @@
 version: 2.1
 
+
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test-with-context:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+            - run:
+                name: "test env variable"
+                command: echo $GLIP_WEBHOOK_ID
+            - notify_glip_on_success:
+              GLIP_WEBHOOK_ID: echo $GLIP_WEBHOOK_ID
+            - notify_glip_on_fail:
+              GLIP_WEBHOOK_ID: echo $GLIP_WEBHOOK_ID
+
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test-with-context:
+            context: private-keys
+
 commands:
   notify_glip_on_success:
     description: "A curl command to send message to glip that the release succeeded"
@@ -17,11 +44,19 @@ commands:
             curl --request POST \
               --url https://hooks.glip.com/webhook/<< parameters.GLIP_WEBHOOK_ID >> \
               --header 'content-type: application/json' \
-              --data "{
-              \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/vhb5nn56blzso6tfkkwo/PHID-FILE-zpg77b6ljrredrsglarm/%E5%9C%96%E7%89%87.png\",
-              \"activity\": \"Release Success\",
-              \"title\": \"<< parameters.TITLE >>\"
-            }"
+              --data-raw "{
+                    \"payload\": {
+                        \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
+                        \"title\": \"release succeeded\",
+                        \"build_num\": 1,
+                        \"build_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
+                        \"vcs_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
+                        \"branch\": \"master\",
+                        \"reponame\": \"api-automation-circle-ci-integration\",
+                        \"username\": \"tlboright\",
+                        \"status\": \"success\"
+                    }
+                }"
           # this step will run only if all of the previous steps have been successful
           when: on_success
   notify_glip_on_fail:
@@ -37,38 +72,21 @@ commands:
       - run:
           name: Notify glip failure 
           command: |
-            curl --request POST \
-              --url https://hooks.glip.com/webhook/<< parameters.GLIP_WEBHOOK_ID >> \
-              --header 'content-type: application/json' \
-             --data "{
-              \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
-              \"activity\": \"🚨 Release Failed 🚨\",
-              \"title\": \"<< parameters.TITLE >>\"
-            }"
+            curl --location --request POST \
+               --url https://hooks.glip.com/webhook/<< parameters.GLIP_WEBHOOK_ID >> \
+                --header 'Content-Type: application/json' \
+                --data-raw "{
+                    \"payload\": {
+                        \"icon\": \"https://d3cn662t4iw3q4.cloudfront.net/file/data/@meepshop/krsfjalcikyd77ie4wpw/PHID-FILE-txbxiclivkx3okh3vl76/%E5%9C%96%E7%89%87.png\",
+                        \"title\": \"release failed\",
+                        \"build_num\": 1,
+                        \"build_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
+                        \"vcs_url\": \"https://app.circleci.com/pipelines/github/tlboright/api-automation-circle-ci-integration/18/workflows/586f7c40-94db-49ba-86fa-b16001bb59f3/jobs/19/steps\",
+                        \"branch\": \"master\",
+                        \"reponame\": \"api-automation-circle-ci-integration\",
+                        \"username\": \"tlboright\",
+                        \"status\": \"failed\"
+                    }
+                }"
           # this step will run only if all of the previous steps have been successful
           when: on_fail
-orbs:
-  node: circleci/node@1.1.6
-jobs:
-  build-and-test-with-context:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
-            - run:
-                name: "test env variable"
-                command: echo $GLIP_WEBHOOK_ID
-            - notify_glip_on_success:
-              GLIP_WEBHOOK_ID: $GLIP_WEBHOOK_ID
-            - notify_glip_on_fail:
-              GLIP_WEBHOOK_ID: $GLIP_WEBHOOK_ID
-
-workflows:
-    build-and-test:
-      jobs:
-        - build-and-test-with-context:
-            context: private-keys
