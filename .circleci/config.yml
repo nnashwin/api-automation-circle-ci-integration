@@ -58,9 +58,9 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
-            - notify_glip_on_success
+            - notify_glip_on_success:
               GLIP_WEBHOOK_ID: ${glip-channel-id}
-            - notify_glip_on_fail
+            - notify_glip_on_fail:
               GLIP_WEBHOOK_ID: ${glip-channel-id}
 
 workflows:
