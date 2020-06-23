@@ -6,7 +6,7 @@ commands:
     parameters:
       GLIP_WEBHOOK_ID:
         type: string
-        default: "$glip-channel-id"
+        default: $GLIP_WEBHOOK_ID
       TITLE:
         type: string
         default: "API Automation tests passed"
@@ -29,7 +29,7 @@ commands:
     parameters:
       GLIP_WEBHOOK_ID:
         type: string
-        default: ${glip-channel-id}
+        default: $GLIP_WEBHOOK_ID
       TITLE:
         type: string
         default: "API Automation tests have failed"
