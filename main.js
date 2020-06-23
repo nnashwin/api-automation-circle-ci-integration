@@ -2,18 +2,24 @@ const nm = require('newman');
 
 nm.run({
     collection: require('./default.postman_collection.json'),
-    reporters: 'cli'
+    // reporters: 'cli'
 })
     .on('start', (err, args) => {
         console.log('running meepshop collection')
     })
     .on('done', (err, summary) => {
         if (err || summary.error) {
-            console.error('collection threw the following error while executing: ', err === undefined ? summary.err : err)
+            console.error('postman collection threw the following execution error: ', err === undefined ? summary.err : err)
         } 
-        console.log(summary.run.failures);
-        console.log(summary.run.stats);
-        //if (summary.run.failures.length > 0) {
-             
-        //}
+
+        if (summary.run.failures.length > 0) {
+            console.error(`
+Test Assertions Failed: Postman collection contained the following failed tests:
+            `);
+            for (var err of summary.run.failures) {
+                console.log(err.error)
+            }
+
+            process.exit(1);
+        }
     });
