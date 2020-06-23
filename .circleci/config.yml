@@ -50,7 +50,7 @@ commands:
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test:
+  build-and-test-with-context:
     executor:
       name: node/default
     steps:
@@ -70,5 +70,5 @@ jobs:
 workflows:
     build-and-test:
       jobs:
-        - build-and-test:
+        - build-and-test-with-context:
             context: private-keys
