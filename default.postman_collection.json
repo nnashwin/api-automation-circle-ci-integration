@@ -44,7 +44,7 @@
 						"id": "71c577c9-fd17-459e-b5c8-59a18bbf5c29",
 						"exec": [
 							"pm.test('Status test', function () {\r",
-							"    pm.response.to.have.status(400);\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
