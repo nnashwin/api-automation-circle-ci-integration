@@ -17,7 +17,7 @@ nm.run({
 Test Assertions Failed: Postman collection contained the following failed tests:
             `);
             for (var err of summary.run.failures) {
-                console.log(err.error)
+                console.error(err.error)
             }
 
             process.exit(1);
