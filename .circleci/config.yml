@@ -1,11 +1,12 @@
 version: 2.1
+
 commands:
   notify_glip_on_success:
     description: "A curl command to send message to glip that the release succeeded"
     parameters:
       GLIP_WEBHOOK_ID:
         type: string
-        default: "${glip-channel-id}"
+        default: "$glip-channel-id"
       TITLE:
         type: string
         default: "API Automation tests passed"
@@ -66,5 +67,5 @@ jobs:
 workflows:
     build-and-test:
       jobs:
-          - build-and-test:
+        - build-and-test:
             context: private-keys
