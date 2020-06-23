@@ -1,16 +1,5 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
-jobs:
-  build-and-test:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+commands:
   notify_glip_on_success:
     description: "A curl command to send message to glip that the release succeeded"
     parameters:
@@ -57,6 +46,22 @@ jobs:
             }"
           # this step will run only if all of the previous steps have been successful
           when: on_fail
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+            - notify_glip_on_success
+              GLIP_WEBHOOK_ID: ${glip-channel-id}
+            - notify_glip_on_fail
+              GLIP_WEBHOOK_ID: ${glip-channel-id}
 
 workflows:
     build-and-test:
