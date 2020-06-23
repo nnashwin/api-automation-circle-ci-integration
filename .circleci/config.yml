@@ -11,15 +11,7 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
-
-workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
-        - notify_glip_on_success
-        - notify_glip_on_fail
-
-notify_glip_on_success:
+  notify_glip_on_success:
     description: "A curl command to send message to glip that the release succeeded"
     parameters:
       GLIP_WEBHOOK_ID:
@@ -42,7 +34,7 @@ notify_glip_on_success:
             }"
           # this step will run only if all of the previous steps have been successful
           when: on_success
-notify_glip_on_fail:
+  notify_glip_on_fail:
     description: "A curl command to send message to glip that the release failed"
     parameters:
       GLIP_WEBHOOK_ID:
@@ -65,3 +57,8 @@ notify_glip_on_fail:
             }"
           # this step will run only if all of the previous steps have been successful
           when: on_fail
+
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
